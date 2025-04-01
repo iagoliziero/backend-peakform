@@ -21,7 +21,6 @@ model ProfileData {
     date   String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    title     String   @db.VarChar(255)
     profileBodyData     ProfileBodyData[]
     exerciseData ExerciseData[]
 }
