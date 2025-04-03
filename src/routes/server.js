@@ -1,12 +1,11 @@
-import { PrismaClient } from '@prisma/client';
 import express from 'express';
-import { createUser } from './controller/controller.js';
+import { createUser } from '../controller/controller.js';
+
 
 const app = express();
 app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
-const prisma = new PrismaClient();
 
 let users = []
 
