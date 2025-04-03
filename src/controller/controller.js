@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 export async function createUser(req, res) { 
     const { name, email, date, password } = req.body;
     try {
-        const user = await prisma.profileData.create({
+        const createUser = await prisma.profileData.create({
             data: {
                 name,
                 email,
@@ -13,7 +13,7 @@ export async function createUser(req, res) {
                 password
             },
         })
-        res.status(201).json(user);
+        res.status(201).json(createUser);
     } catch (error) {
         console.error(error.message);
         res.status(500).send('Error creating user');
@@ -23,8 +23,8 @@ export async function createUser(req, res) {
 export async function getUser(req, res) {
 
     try {
-        const user = await prisma.profileData.findMany();
-        res.status(200).send(user)
+        const getUser = await prisma.profileData.findMany();
+        res.status(200).send(getUser)
     } catch (error) {
         console.log(error.message)
         res.status(500).send('Error get user')
@@ -35,7 +35,7 @@ export async function updateUser(req, res) {
     const id = parseInt(req.params.id)
     const { name, email, date, password } = req.body;
     try {
-        const user = await prisma.profileData.update({
+        const updateUser = await prisma.profileData.update({
             where: {
                 id
             }, 
@@ -47,9 +47,24 @@ export async function updateUser(req, res) {
             }
             
         })
-        res.status(201).send(user)
+        res.status(201).send(updateUser)
     } catch (error) {
         console.log(error.message)
         res.status(500).send('Error put user')
+    }
+}
+
+export async function deleteUser(req, res) {
+    const id = parseInt(req.params.id)
+    try {
+        const deleteUser = await prisma.profileData.delete({
+            where: {
+                id
+            }
+        })
+        res.status(200).send(deleteUser)
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).send('Error delete user')
     }
 }
