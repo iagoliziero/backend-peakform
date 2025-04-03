@@ -19,3 +19,13 @@ export async function createUser(req, res) {
         res.status(500).send('Error creating user');
     }
 }
+
+export async function getUser(req, res) {
+    try {
+        const user = await prisma.profileData.findMany();
+        res.status(200).send(user)
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).send('Error get user')
+    }
+}
