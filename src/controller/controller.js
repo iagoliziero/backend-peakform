@@ -21,11 +21,35 @@ export async function createUser(req, res) {
 }
 
 export async function getUser(req, res) {
+
     try {
         const user = await prisma.profileData.findMany();
         res.status(200).send(user)
     } catch (error) {
         console.log(error.message)
         res.status(500).send('Error get user')
+    }
+}
+
+export async function updateUser(req, res) {
+    const id = parseInt(req.params.id)
+    const { name, email, date, password } = req.body;
+    try {
+        const user = await prisma.profileData.update({
+            where: {
+                id
+            }, 
+            data: {
+                name,
+                email,
+                date,
+                password,
+            }
+            
+        })
+        res.status(201).send(user)
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).send('Error put user')
     }
 }
