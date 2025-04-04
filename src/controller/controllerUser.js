@@ -68,3 +68,5 @@ export async function deleteUser(req, res) {
         res.status(500).send('Error delete user')
     }
 }
+
+
