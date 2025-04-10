@@ -1,6 +1,6 @@
 import express from 'express';
 import { createUser, deleteUser, getUser, updateUser } from '../controller/controllerUser.js';
-import  { createExercise, getExercise, updateExercise } from '../controller/controllerExercise.js';
+import  { createExercise, deleteExercise, getExercise, updateExercise } from '../controller/controllerExercise.js';
 
 const app = express();
 app.use(express.json());
@@ -16,6 +16,7 @@ app.delete('/users/:id', deleteUser)
 app.post('/exercises', createExercise);
 app.get('/exercises', getExercise)
 app.put('/exercises/:id', updateExercise)
+app.delete('/exercises/:id', deleteExercise)
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

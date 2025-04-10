@@ -80,3 +80,19 @@ export async function updateExercise(req, res) {
         res.status(500).send('Error put user')
     }
 }
+
+export async function deleteExercise(req, res) {
+    const id = parseInt(req.params.id)
+    try {
+        const deleteExercise = await prisma.exerciseData.delete({
+            where: {
+                id,
+            }
+        })
+        res.status(200).send(deleteExercise)
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).send('Error delete user')
+    }
+    
+}
