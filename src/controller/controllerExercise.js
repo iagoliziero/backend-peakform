@@ -43,3 +43,15 @@ export async function createExercise(req, res) {
         res.status(500).send('Error creating exercise')
     }
 }
+
+export async function getExercise(req, res) {
+    try {
+        const getExercise = await prisma.exerciseData.findMany();
+        res.status(200).send(getExercise)
+
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).send('Error get user')
+    }
+}
+
