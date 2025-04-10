@@ -36,7 +36,7 @@ model ProfileBodyData {
     obesityLevel ObesityLevel?
     weightStatus WeightStatus?
     profileDataId Int 
-    profileData    ProfileData    @relation(fields: [profileDataId], references: [id])
+    profileData    ProfileData    @relation(fields: [profileDataId], references: [id], onDelete: Cascade)
     createdAt      DateTime       @default(now())
     updatedAt      DateTime       @updatedAt
 }
@@ -50,7 +50,7 @@ model ExerciseData {
     intensity Intensity
     description String?
     profileDataId Int 
-    profileData ProfileData @relation(fields: [profileDataId], references:[id])
+    profileData ProfileData @relation(fields: [profileDataId], references:[id], onDelete: Cascade)
     createdAt      DateTime       @default(now())
      updatedAt      DateTime       @updatedAt
 }
