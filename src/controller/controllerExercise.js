@@ -55,3 +55,28 @@ export async function getExercise(req, res) {
     }
 }
 
+export async function updateExercise(req, res) {
+    const id = parseInt(req.params.id)
+    const {title, numberSeries, repetitions, advancedTechnique, intensity, description} = req.body;
+
+    try {
+        const updateExercise = await prisma.exerciseData.update({
+            where: {
+                id,
+            },
+            data: {
+                title,
+                 numberSeries, 
+                 repetitions, 
+                 advancedTechnique, 
+                 intensity, 
+                 description
+            }
+        })
+        res.status(201).send(updateExercise)
+
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).send('Error put user')
+    }
+}
