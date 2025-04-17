@@ -1,6 +1,5 @@
-import { PrismaClient, Intensity } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { Intensity } from "@prisma/client";
+import prisma from "../config/dbConfig.js";
 
 export async function createExercise(req, res) { 
     const {title, numberSeries, repetitions, advancedTechnique, intensity, description, profileDataId} = req.body;

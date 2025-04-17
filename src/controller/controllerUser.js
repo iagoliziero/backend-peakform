@@ -1,6 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "../config/dbConfig.js";
 
-const prisma = new PrismaClient();
 
 export async function createUser(req, res) { 
     const { name, email, date, password } = req.body;
