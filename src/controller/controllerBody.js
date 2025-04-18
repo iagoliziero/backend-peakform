@@ -59,3 +59,30 @@ export async function getBody(req, res) {
         res.status(500).send('Error get body infos')
     }
 }
+
+export async function updateBody(req, res) {
+    const id = parseInt(req.params.id)
+    const {gender, weight, height, goalWeight, imc, obesityLevel, weightStatus} = req.body;
+
+    try {
+        const updateBody = await prisma.profileBodyData.update({
+            where: {
+                id,
+            },
+            data: {
+                gender, 
+                weight, 
+                height, 
+                goalWeight, 
+                imc, 
+                obesityLevel, 
+                weightStatus, 
+            }
+        })
+        res.status(201).send(updateBody)
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error update body infos')
+    }
+    
+}
