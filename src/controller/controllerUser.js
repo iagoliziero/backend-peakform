@@ -20,7 +20,7 @@ export async function createUser(req, res) {
         })
         res.status(201).json(createUser);
     } catch (error) {
-        console.error(error.message);
+        console.error(error);
         res.status(500).send('Error creating user');
     }
 }
@@ -31,7 +31,7 @@ export async function getUser(req, res) {
         const getUser = await prisma.profileData.findMany();
         res.status(200).send(getUser)
     } catch (error) {
-        console.log(error.message)
+        console.log(error)
         res.status(500).send('Error get user')
     }
 }
@@ -54,7 +54,7 @@ export async function updateUser(req, res) {
         })
         res.status(201).send(updateUser)
     } catch (error) {
-        console.log(error.message)
+        console.log(error)
         res.status(500).send('Error put user')
     }
 }
@@ -69,7 +69,7 @@ export async function deleteUser(req, res) {
         })
         res.status(200).send(deleteUser)
     } catch (error) {
-        console.log(error.message)
+        console.log(error)
         res.status(500).send('Error delete user')
     }
 }

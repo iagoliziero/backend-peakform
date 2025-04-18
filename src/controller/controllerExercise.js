@@ -38,7 +38,7 @@ export async function createExercise(req, res) {
         })
         res.status(201).json(createExercise);
     } catch (error) {
-        console.log(error.message);
+        console.log(error);
         res.status(500).send('Error creating exercise')
     }
 }
@@ -49,7 +49,7 @@ export async function getExercise(req, res) {
         res.status(200).send(getExercise)
 
     } catch (error) {
-        console.log(error.message)
+        console.log(error)
         res.status(500).send('Error get user')
     }
 }
@@ -75,7 +75,7 @@ export async function updateExercise(req, res) {
         res.status(201).send(updateExercise)
 
     } catch (error) {
-        console.log(error.message)
+        console.log(error)
         res.status(500).send('Error put user')
     }
 }
@@ -90,7 +90,7 @@ export async function deleteExercise(req, res) {
         })
         res.status(200).send(deleteExercise)
     } catch (error) {
-        console.log(error.message)
+        console.log(error)
         res.status(500).send('Error delete user')
     }
     

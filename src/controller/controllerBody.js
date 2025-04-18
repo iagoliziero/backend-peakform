@@ -55,7 +55,7 @@ export async function getBody(req, res) {
         const getBody = await prisma.profileBodyData.findMany()
         res.status(200).send(getBody)
     } catch (error) {
-        console.log(error.message);
+        console.log(error);
         res.status(500).send('Error get body infos')
     }
 }
