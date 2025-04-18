@@ -2,15 +2,21 @@ import prisma from "../config/dbConfig.js";
 
 
 export async function createUser(req, res) { 
-    const { name, email, date, password } = req.body;
+    const { name, email, date, password, profileBodyData, exerciseData } = req.body;
     try {
         const createUser = await prisma.profileData.create({
             data: {
                 name,
                 email,
                 date,
-                password
+                password,
+                profileBodyData: {
+                    create: profileBodyData
+                },
             },
+            include: {
+                profileBodyData: true
+            }
         })
         res.status(201).json(createUser);
     } catch (error) {
