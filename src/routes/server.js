@@ -2,10 +2,17 @@ import express from 'express';
 import { createUser, deleteUser, getUser, updateUser } from '../controller/controllerUser.js';
 import  { createExercise, deleteExercise, getExercise, updateExercise } from '../controller/controllerExercise.js';
 import { createBody, deleteBody, getBody, updateBody } from '../controller/controllerBody.js';
+import cors from 'cors'
 
 const app = express();
+app.use(cors({
+  origin: 'localhost:5173'
+}))
+
 app.use(express.json());
 const PORT = process.env.PORT || 3000;
+
+
 
 // method CRUD from users
 app.post('/users', createUser);
