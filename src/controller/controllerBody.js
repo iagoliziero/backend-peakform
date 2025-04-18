@@ -49,3 +49,13 @@ export async function createBody(req, res) {
         res.status(500).send('Error create body infos')
     }
 }
+
+export async function getBody(req, res) {
+    try {
+        const getBody = await prisma.profileBodyData.findMany()
+        res.status(200).send(getBody)
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).send('Error get body infos')
+    }
+}

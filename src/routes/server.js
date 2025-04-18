@@ -1,7 +1,7 @@
 import express from 'express';
 import { createUser, deleteUser, getUser, updateUser } from '../controller/controllerUser.js';
 import  { createExercise, deleteExercise, getExercise, updateExercise } from '../controller/controllerExercise.js';
-import { createBody } from '../controller/controllerBody.js';
+import { createBody, getBody } from '../controller/controllerBody.js';
 
 const app = express();
 app.use(express.json());
@@ -21,6 +21,7 @@ app.delete('/exercises/:id', deleteExercise)
 
 //method CRUD from profileBody
 app.post('/body', createBody)
+app.get('/body', getBody)
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
