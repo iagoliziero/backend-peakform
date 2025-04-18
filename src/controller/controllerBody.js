@@ -86,3 +86,18 @@ export async function updateBody(req, res) {
     }
     
 }
+
+export async function deleteBody(req, res) {
+    const id = parseInt(req.params.id)
+    try {
+        const deleteBody = await prisma.profileBodyData.delete({
+            where: {
+                id
+            }
+        })
+        res.status(200).send(deleteBody)
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error delete body infos')
+    }
+}
