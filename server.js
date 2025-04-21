@@ -1,8 +1,9 @@
 import express from 'express';
-import { createUser, deleteUser, getUser, updateUser } from '../controller/controllerUser.js';
-import  { createExercise, deleteExercise, getExercise, updateExercise } from '../controller/controllerExercise.js';
-import { createBody, deleteBody, getBody, updateBody } from '../controller/controllerBody.js';
+import { createUser, deleteUser, getUser, updateUser } from './src/controller/controllerUser.js';
+import  { createExercise, deleteExercise, getExercise, updateExercise } from './src/controller/controllerExercise.js';
+import { createBody, deleteBody, getBody, updateBody } from './src/controller/controllerBody.js';
 import cors from 'cors'
+import routerUser from './src/routes/users.routes.js';
 
 const app = express();
 app.use(cors({
@@ -15,10 +16,7 @@ const PORT = process.env.PORT || 3000;
 
 
 // method CRUD from users
-app.post('/users', createUser);
-app.get('/users', getUser)
-app.put('/users/:id', updateUser)
-app.delete('/users/:id', deleteUser)
+app.use('/users', routerUser)
 
 // method CRUD from exercises
 app.post('/exercises', createExercise);
