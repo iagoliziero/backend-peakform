@@ -1,8 +1,8 @@
 import express from 'express';
-import { createBody, deleteBody, getBody, updateBody } from './src/controller/controllerBody.js';
 import cors from 'cors'
 import routerUser from './src/routes/users.routes.js';
 import routerExercise from './src/routes/exercises.routes.js';
+import routerBody from './src/routes/body.routes.js';
 
 const app = express();
 app.use(cors({
@@ -21,10 +21,7 @@ app.use('/users', routerUser)
 app.use('/exercises', routerExercise)
 
 //method CRUD from profileBody
-app.post('/body', createBody)
-app.get('/body', getBody)
-app.put('/body/:id', updateBody)
-app.delete('/body/:id', deleteBody)
+app.use('/body', routerBody)
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
