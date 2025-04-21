@@ -1,8 +1,10 @@
+import jwt from "jsonwebtoken";
 import prisma from "../config/dbConfig.js";
 
+const SECRET = process.env.SECRET
 
 export async function createUser(req, res) { 
-    const { name, email, date, password, profileBodyData, exerciseData } = req.body;
+    const { name, email, date, password, profileBodyData} = req.body;
     try {
         const createUser = await prisma.profileData.create({
             data: {
@@ -18,7 +20,8 @@ export async function createUser(req, res) {
                 profileBodyData: true
             }
         })
-        res.status(201).json(createUser);
+        const token = jwt.sign({profileDataId: createUser.id}, SECRET, {expiresIn: '5m'})
+        res.status(201).json({user: createUser, auth: true, token});
     } catch (error) {
         console.error(error);
         res.status(500).send('Error creating user');

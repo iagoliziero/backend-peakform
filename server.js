@@ -3,6 +3,7 @@ import cors from 'cors'
 import routerUser from './src/routes/users.routes.js';
 import routerExercise from './src/routes/exercises.routes.js';
 import routerBody from './src/routes/body.routes.js';
+import jwt from 'jsonwebtoken';
 
 const app = express();
 app.use(cors({
