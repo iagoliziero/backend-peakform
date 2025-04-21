@@ -1,9 +1,8 @@
 import express from 'express';
-import { createUser, deleteUser, getUser, updateUser } from './src/controller/controllerUser.js';
-import  { createExercise, deleteExercise, getExercise, updateExercise } from './src/controller/controllerExercise.js';
 import { createBody, deleteBody, getBody, updateBody } from './src/controller/controllerBody.js';
 import cors from 'cors'
 import routerUser from './src/routes/users.routes.js';
+import routerExercise from './src/routes/exercises.routes.js';
 
 const app = express();
 app.use(cors({
@@ -19,10 +18,7 @@ const PORT = process.env.PORT || 3000;
 app.use('/users', routerUser)
 
 // method CRUD from exercises
-app.post('/exercises', createExercise);
-app.get('/exercises', getExercise)
-app.put('/exercises/:id', updateExercise)
-app.delete('/exercises/:id', deleteExercise)
+app.use('/exercises', routerExercise)
 
 //method CRUD from profileBody
 app.post('/body', createBody)
