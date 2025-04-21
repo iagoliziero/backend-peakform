@@ -6,7 +6,7 @@ import routerBody from './src/routes/body.routes.js';
 
 const app = express();
 app.use(cors({
-  origin: 'localhost:5173'
+  origin: 'http://localhost:5173'
 }))
 
 app.use(express.json());
