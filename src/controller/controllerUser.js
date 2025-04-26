@@ -3,6 +3,7 @@ import prisma from "../config/dbConfig.js";
 
 const SECRET = process.env.SECRET
 
+
 export async function createUser(req, res) { 
     const { name, email, date, password, profileBodyData} = req.body;
     try {
@@ -31,7 +32,15 @@ export async function createUser(req, res) {
 export async function getUser(req, res) {
 
     try {
-        const getUser = await prisma.profileData.findMany();
+        const userId = req.user.profileDataId;
+        const getUser = await prisma.profileData.findUnique({
+            where: {
+                id: parseInt(userId)
+            },
+            include: {
+                profileBodyData: true,
+            }
+        })
         res.status(200).send(getUser)
     } catch (error) {
         console.log(error)
