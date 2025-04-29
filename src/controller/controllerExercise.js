@@ -1,5 +1,6 @@
 import { Intensity } from "@prisma/client";
 import prisma from "../config/dbConfig.js";
+import jwt from "jsonwebtoken";
 
 export async function createExercise(req, res) { 
     const {title, numberSeries, repetitions, advancedTechnique, intensity, description, profileDataId} = req.body;
@@ -9,10 +10,10 @@ export async function createExercise(req, res) {
     if (!validIntesity.includes(intensity)) {
         return res.status(400).send('Intensity must be low, medium or high')
     }
-
+    const userId = req.user.profileDataId;
     const userExists = await prisma.profileData.findUnique({
         where: { 
-            id: parseInt(profileDataId)
+            id: parseInt(userId)
         }
       });
   
@@ -20,7 +21,9 @@ export async function createExercise(req, res) {
         return res.status(404).send("User not found", req.body);
       }
 
+
     try {
+        
         const createExercise = await prisma.exerciseData.create({
             data: {
                 title,
@@ -31,11 +34,12 @@ export async function createExercise(req, res) {
                 description,
                 profileData: {
                     connect: {
-                        id: parseInt(profileDataId)
+                        id: userId
                     }
                 }
-            },
+            }
         })
+
         res.status(201).json(createExercise);
     } catch (error) {
         console.log(error);
