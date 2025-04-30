@@ -13,7 +13,7 @@ export async function createExercise(req, res) {
     const userId = req.user.profileDataId;
     const userExists = await prisma.profileData.findUnique({
         where: { 
-            id: parseInt(userId)
+            id: userId
         }
       });
   
@@ -50,7 +50,7 @@ export async function createExercise(req, res) {
 export async function getExercise(req, res) {
     const userId = req.user.profileDataId;
     try {
-        const getExercise = await prisma.exerciseData.findMany({where: {id: userId}});
+        const getExercise = await prisma.exerciseData.findMany({ where: { profileDataId: userId } });
         res.status(200).send(getExercise)
 
     } catch (error) {
@@ -61,7 +61,36 @@ export async function getExercise(req, res) {
 
 export async function updateExercise(req, res) {
     const id = parseInt(req.params.id)
-    const {title, numberSeries, repetitions, advancedTechnique, intensity, description} = req.body;
+    const {title, numberSeries, repetitions, advancedTechnique, intensity, description, profileDataId} = req.body;
+
+    // Check if the intensity is valid
+    const validIntesity = Object.values(Intensity);
+    if(!validIntesity.includes(intensity)) {
+        return res.status(400).send('Intensity must be low, medium or high')
+    }
+
+    const userId = req.user.profileDataId
+
+    const userExists = await prisma.profileData.findUnique({
+        where: { 
+            id: userId
+        }
+      });
+
+      if(!userExists) {
+        return res.status(404).send("User not found", req.body);
+      }
+
+      const exercise = await prisma.exerciseData.findUnique({
+        where: {
+            id
+        }
+      });
+
+      if(!exercise || exercise.profileDataId !== userId) {
+         
+        return res.status(404).send("Exercise not found or you don't have permission to update it", req.body);
+      }
 
     try {
         const updateExercise = await prisma.exerciseData.update({
@@ -74,7 +103,12 @@ export async function updateExercise(req, res) {
                  repetitions, 
                  advancedTechnique, 
                  intensity, 
-                 description
+                 description,
+                 profileData: {
+                    connect: {
+                        id: userId
+                    }
+                }
             }
         })
         res.status(201).send(updateExercise)
