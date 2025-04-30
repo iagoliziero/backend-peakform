@@ -5,7 +5,7 @@ import verifyToken from '../middleware/verifyToken.js';
 const routerExercise = express.Router();
 
 routerExercise.post('/', verifyToken, createExercise)
-routerExercise.get('/', getExercise)
+routerExercise.get('/', verifyToken, getExercise)
 routerExercise.put('/:id', updateExercise)
 routerExercise.delete('/:id', deleteExercise)
 

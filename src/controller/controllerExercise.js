@@ -48,8 +48,9 @@ export async function createExercise(req, res) {
 }
 
 export async function getExercise(req, res) {
+    const userId = req.user.profileDataId;
     try {
-        const getExercise = await prisma.exerciseData.findMany();
+        const getExercise = await prisma.exerciseData.findMany({where: {id: userId}});
         res.status(200).send(getExercise)
 
     } catch (error) {
