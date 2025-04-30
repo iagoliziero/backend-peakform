@@ -92,11 +92,22 @@ export async function updateUser(req, res) {
 }
 
 export async function deleteUser(req, res) {
-    const id = parseInt(req.params.id)
+
+    const userId = req.user.profileDataId;
+    const userExists = await prisma.profileData.findUnique({
+        where: { 
+            id: userId
+        }
+      });
+  
+      if (!userExists) {
+        return res.status(404).send("User not found", req.body);
+      }
+
     try {
         const deleteUser = await prisma.profileData.delete({
             where: {
-                id
+                id: userId
             }
         })
         res.status(200).send(deleteUser)
