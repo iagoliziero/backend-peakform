@@ -11,6 +11,11 @@ export async function createUser(req, res) {
         return res.status(404).send("Password must be as least 7 characters long")
     }
 
+    const validDataRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+    if(!validDataRegex.test(date)) {
+        return res.status(404).send("Date must be in the format dd/mm/yyyy")
+    }
+
     try {
         const createUser = await prisma.profileData.create({
             data: {
