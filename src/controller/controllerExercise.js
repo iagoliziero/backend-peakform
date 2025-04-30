@@ -121,11 +121,32 @@ export async function updateExercise(req, res) {
 
 export async function deleteExercise(req, res) {
     const id = parseInt(req.params.id)
+    const userId = req.user.profileDataId;
+    const userExists = await prisma.profileData.findUnique({
+        where: { 
+            id: userId
+        }
+      });
+
+      if(!userExists) {
+        return res.status(404).send("User not found", req.body);
+      }
+
+      const exercise = await prisma.exerciseData.findUnique({
+        where: {
+            id
+        }
+      });
+
+      if(!exercise || exercise.profileDataId !== userId) {
+        return res.status(404).send("Exercise not found or you don't have permission to delete it", req.body);
+      }
+
     try {
         const deleteExercise = await prisma.exerciseData.delete({
             where: {
                 id,
-            }
+            },
         })
         res.status(200).send(deleteExercise)
     } catch (error) {
