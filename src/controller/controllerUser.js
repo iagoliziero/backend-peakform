@@ -54,12 +54,27 @@ export async function getUser(req, res) {
 }
 
 export async function updateUser(req, res) {
-    const id = parseInt(req.params.id)
+   
     const { name, email, date, password } = req.body;
+    const userId = req.user.profileDataId;
+    const userExists = await prisma.profileData.findUnique({
+        where: { 
+            id: userId
+        }
+      });
+  
+      if (!userExists) {
+        return res.status(404).send("User not found", req.body);
+      }
+
+    if(password.length <= 7) {
+        return res.status(404).send("Password must be as least 7 characters long")
+    }
+
     try {
         const updateUser = await prisma.profileData.update({
             where: {
-                id
+                id: userId
             }, 
             data: {
                 name,
