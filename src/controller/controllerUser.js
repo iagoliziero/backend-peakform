@@ -26,7 +26,7 @@ export async function createUser(req, res) {
                 profileBodyData: true
             }
         })
-        const token = jwt.sign({profileDataId: createUser.id}, SECRET, {expiresIn: '5m'})
+        const token = jwt.sign({profileDataId: createUser.id}, SECRET, {expiresIn: '20m'})
         res.status(201).json({user: createUser, auth: true, token});
     } catch (error) {
         console.error(error);
