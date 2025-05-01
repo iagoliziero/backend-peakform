@@ -17,10 +17,12 @@ export async function createBody(req, res) {
             return res.status(404).send('The weight status are incorrect.')
         }
 
+        const userId = req.user.profileDataId;
+
         //check if user exist
         const userExists = await prisma.profileData.findUnique({
             where: {
-                id: parseInt(profileDataId)
+                id: userId
             }
         })
 
@@ -39,7 +41,7 @@ export async function createBody(req, res) {
                 weightStatus,
                 profileData: {
                     connect: {
-                        id: parseInt(profileDataId)
+                        id: userId
                     }
                 }
             }
