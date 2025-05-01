@@ -3,7 +3,7 @@ import prisma from "../config/dbConfig.js";
 
 export async function createBody(req, res) {
     try {
-        const {gender, weight, height, goalWeight, imc, obesityLevel, weightStatus, profileDataId} = req.body;
+        const {gender, weight, height, goalWeight, imc, obesityLevel, weightStatus} = req.body;
 
         // Check if a obesity level is valid
         const obesityLevelValid = Object.values(ObesityLevel)
@@ -53,8 +53,20 @@ export async function createBody(req, res) {
 }
 
 export async function getBody(req, res) {
+
+    const userId = req.user.profileDataId;
+    const userExists = await prisma.profileData.findUnique({
+        where: { 
+            id: userId
+        }
+      });
+  
+      if (!userExists) {
+        return res.status(404).send("User not found", req.body);
+      }
+
     try {
-        const getBody = await prisma.profileBodyData.findMany()
+        const getBody = await prisma.profileBodyData.findMany({ where: { id: userId } });
         res.status(200).send(getBody)
     } catch (error) {
         console.log(error);
@@ -65,6 +77,16 @@ export async function getBody(req, res) {
 export async function updateBody(req, res) {
     const id = parseInt(req.params.id)
     const {gender, weight, height, goalWeight, imc, obesityLevel, weightStatus} = req.body;
+    const userId = req.user.profileDataId;
+    const userExists = await prisma.profileData.findUnique({
+        where: { 
+            id: userId
+        }
+      });
+  
+      if(!userExists) {
+        return res.status(404).send("User not found", req.body);
+      }
 
     try {
         const updateBody = await prisma.profileBodyData.update({
@@ -79,6 +101,11 @@ export async function updateBody(req, res) {
                 imc, 
                 obesityLevel, 
                 weightStatus, 
+                profileData: {
+                    connect: {
+                        id: userId
+                    }
+                }
             }
         })
         res.status(201).send(updateBody)
