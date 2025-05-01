@@ -21,7 +21,7 @@ model ProfileData {
     date   String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    profileBodyData     ProfileBodyData[]
+    profileBodyData     ProfileBodyData[] 
     exerciseData ExerciseData[]
 }
 
@@ -36,7 +36,7 @@ model ProfileBodyData {
     obesityLevel ObesityLevel?
     weightStatus WeightStatus?
     profileDataId Int 
-    profileData    ProfileData    @relation(fields: [profileDataId], references: [id])
+    profileData    ProfileData    @relation(fields: [profileDataId], references: [id], onDelete: Cascade)
     createdAt      DateTime       @default(now())
     updatedAt      DateTime       @updatedAt
 }
