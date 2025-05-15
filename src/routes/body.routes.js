@@ -3,7 +3,7 @@ import { createBody, deleteBody, getBody, updateBody } from '../controller/contr
 import verifyToken from '../middleware/verifyToken.js';
 const routerBody = express.Router();
 
-routerBody.post('/', verifyToken, createBody)
+routerBody.post('/', createBody)
 routerBody.get('/', verifyToken, getBody)
 routerBody.put('/:id', verifyToken, updateBody)
 routerBody.delete('/:id', deleteBody)

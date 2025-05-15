@@ -33,10 +33,10 @@ export async function createBody(req, res) {
         const createBody = await prisma.profileBodyData.create({
             data: {
                 gender,
-                weight,
-                height,
-                goalWeight,
-                imc,
+                weight: parseInt(weight),
+                height: parseInt(height),
+                goalWeight: parseInt(goalWeight),
+                imc: parseFloat(imc),
                 obesityLevel,
                 weightStatus,
                 profileData: {
@@ -44,7 +44,7 @@ export async function createBody(req, res) {
                         id: userId
                     }
                 }
-            }
+            },
         })
         res.status(201).send(createBody)
     } catch (error) {
