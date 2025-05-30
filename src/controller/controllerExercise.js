@@ -5,11 +5,7 @@ import prisma from "../config/dbConfig.js";
 export async function createExercise(req, res) { 
     const {title, numberSeries, repetitions, advancedTechnique, intensity, description} = req.body;
     
-    // Check if the intensity is valid
-    const validIntesity = Object.values(Intensity);
-    if (!validIntesity.includes(intensity)) {
-        return res.status(400).send('Intensity must be low, medium or high')
-    }
+
     const userId = req.user.profileDataId;
     const userExists = await prisma.profileData.findUnique({
         where: { 
