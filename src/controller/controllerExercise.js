@@ -1,11 +1,10 @@
-import { Intensity } from "@prisma/client";
+import pkg from '@prisma/client';
+const { Intensity } = pkg;
 import prisma from "../config/dbConfig.js";
-
 
 export async function createExercise(req, res) { 
     const {title, numberSeries, repetitions, advancedTechnique, intensity, description} = req.body;
     
-
     const userId = req.user.profileDataId;
     const userExists = await prisma.profileData.findUnique({
         where: { 
@@ -16,7 +15,6 @@ export async function createExercise(req, res) {
       if (!userExists) {
         return res.status(404).send("User not found", req.body);
       }
-
 
     try {
         
@@ -60,8 +58,8 @@ export async function updateExercise(req, res) {
     const {title, numberSeries, repetitions, advancedTechnique, intensity, description} = req.body;
 
     // Check if the intensity is valid
-    const validIntesity = Object.values(Intensity);
-    if(!validIntesity.includes(intensity)) {
+    const validIntensity = Object.values(Intensity);
+    if(!validIntensity.includes(intensity)) {
         return res.status(400).send('Intensity must be low, medium or high')
     }
 
