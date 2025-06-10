@@ -3,7 +3,6 @@ import prisma from "../config/dbConfig.js";
 
 const SECRET = process.env.SECRET
 
-
 export async function createUser(req, res) { 
     const { name, email, date, password, profileBodyData} = req.body;
 
