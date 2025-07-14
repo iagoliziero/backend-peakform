@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ProfileData {
+    id          Int   @id @default(autoincrement())
+    name        String   
+    email       String   @unique
+    password    String
+    date   String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    profileBodyData     ProfileBodyData[] 
+    exerciseData ExerciseData[]
+}
+
+
+model ProfileBodyData {
+    id          Int   @id @default(autoincrement())
+    gender      String?
+    weight Int
+    height Int
+    goalWeight Int
+    imc Float? 
+    obesityLevel ObesityLevel?
+    weightStatus WeightStatus?
+    profileDataId Int 
+    profileData    ProfileData    @relation(fields: [profileDataId], references: [id], onDelete: Cascade)
+    createdAt      DateTime       @default(now())
+    updatedAt      DateTime       @updatedAt
+}
+
+model ExerciseData {
+    id        Int      @id @default(autoincrement())
+    title String
+    numberSeries String
+    repetitions String
+    advancedTechnique String
+    intensity Intensity
+    description String?
+    profileDataId Int 
+    profileData ProfileData @relation(fields: [profileDataId], references:[id], onDelete: Cascade)
+    createdAt      DateTime       @default(now())
+     updatedAt      DateTime       @updatedAt
+}
+
+
+enum ObesityLevel {
+  NORMAL
+  GRADE_1
+  GRADE_2
+  GRADE_3
+
+}
+enum WeightStatus {
+  UNDERWEIGHT
+  NORMAL_WEIGHT
+  OVERWEIGHT
+  OBESITY
+  SEVERE_OBESITY
+}
+
+enum Intensity {
+    HEAVY
+    MODERATE
+    LIGHT
+}
