@@ -1,4 +1,6 @@
-import { ObesityLevel, WeightStatus } from "@prisma/client";
+import pkg from '@prisma/client';
+const { ObesityLevel, WeightStatus } = pkg;
+
 import prisma from "../config/dbConfig.js";
 
 export async function createBody(req, res) {

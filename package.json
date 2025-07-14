@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --watch server.js"
+    "build": "npx prisma generate",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",

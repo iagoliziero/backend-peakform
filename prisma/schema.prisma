@@ -32,7 +32,7 @@ model ProfileBodyData {
     weight Int
     height Int
     goalWeight Int
-    imc Float 
+    imc Float? 
     obesityLevel ObesityLevel?
     weightStatus WeightStatus?
     profileDataId Int 
